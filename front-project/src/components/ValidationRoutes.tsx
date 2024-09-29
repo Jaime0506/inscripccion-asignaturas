@@ -1,5 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom"
 import { useAppSelector } from "../hooks"
+import { AuthLayout } from "./AuthLayout"
 
 interface ValidationRoutesProps {
     redirectTo: string
@@ -11,7 +12,12 @@ export const ValidationRoutes = ({ redirectTo, validation }: ValidationRoutesPro
     const state = useAppSelector(state => state.auth.status)
 
     if (validation(state)) {
-        return <Outlet />
+        // Si estoy donde deberia estar, cargo el contenido
+        return (
+            <AuthLayout>
+                <Outlet />
+            </AuthLayout>
+        )
     }
 
     return <Navigate to={redirectTo} />

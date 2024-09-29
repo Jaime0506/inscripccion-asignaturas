@@ -1,5 +1,6 @@
 import { Navigate, RouteObject } from "react-router-dom";
 import { ValidationRoutes } from "../components/ValidationRoutes";
+import { LoginPage, RegisterPage } from "./pages";
 
 const validation = (status: string):boolean => {
     if (status === "not-authenticated") {
@@ -19,11 +20,11 @@ export const AuthRoutes: RouteObject = {
         },
         {
             path: 'login',
-            element: <>Login</>
+            element: <LoginPage />
         },
         {
             path: 'register',
-            element: <>Register</>
+            element: <RegisterPage />
         }
     ]
 }

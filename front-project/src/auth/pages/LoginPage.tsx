@@ -1,8 +1,100 @@
+import { useState } from "react"
+
+import { Button } from "@nextui-org/button"
+import { Image } from "@nextui-org/image"
+import { Input } from "@nextui-org/input"
+
+import login_student from '../../assets/login_student.svg'
+import { Link } from "react-router-dom"
+
 export const LoginPage = () => {
+
+    const [isVisible, setIsVisible] = useState(false);
+
+    const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        console.log("Me llamaron")
+    }
+
+    const toogleVisible = () => setIsVisible(state => !state)
+
     return (
-        <div>
-            LoginPage
-            <h1>que pasa mi gente linda</h1>
-        </div>
+        <section className="flex w-full h-screen grid-cols-2">
+            <div className="md:w-[45%] p-8 px-20 flex flex-col gap-20">
+                <h1 className="font-bold text-3xl font-roboto">Canvis</h1>
+
+                <section className="flex flex-col gap-6">
+                    <h2 className="font-bold font-open text-4xl">"Conéctate y gestiona tu aprendizaje de forma simple y colaborativa."</h2>
+                    <h4 className="text-lg font-roboto font-normal">Inicia sesion para empezar a usar nuestros servicios</h4>
+
+                    <div className="flex flex-col py-10">
+                        <form onSubmit={handleOnSubmit}>
+                            <Input
+                                name="email"
+                                variant="bordered"
+                                radius="none"
+                                label="Correo electronico"
+                                type="email"
+                                endContent={
+                                    <div className="h-full flex items-center">
+                                        <i className="fa-solid fa-envelope"></i>
+                                    </div>
+                                }
+                            />
+                            <Input
+                                name="email"
+                                variant="bordered"
+                                radius="none"
+                                label="Contraseña"
+                                type={isVisible ? "text" : "password"}
+                                endContent={
+                                    <button className="h-full flex items-center" onClick={toogleVisible}>
+                                        {
+                                            isVisible ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i> 
+                                        }
+                                    </button>
+                                }
+                            />
+
+                            <div className="flex gap-5 py-8">
+                                <Button
+                                    type="submit"
+                                    radius="none"
+                                    style={{
+                                        backgroundColor: "#FF0004",
+                                        color: "#FFFFFF"
+                                    }}
+                                >
+                                    Iniciar
+                                </Button>
+
+                                <Button
+                                    as={Link}
+                                    radius="none"
+                                    style={{
+                                        backgroundColor: "#FFFFFF",
+                                        color: "black",
+                                        borderColor: "#FF0004",
+                                        borderWidth: 1.3,
+                                    }}
+                                    to={'/auth/register'}
+                                >
+                                    Registrate
+                                </Button>
+                            </div>
+                        </form>
+
+                    </div>
+                </section>
+            </div>
+
+            <div className="flex-1 flex items-center justify-center bg-[#FF0004]">
+                <Image
+                    className=""
+                    src={login_student}
+                />
+            </div>
+        </section>
     )
 }
