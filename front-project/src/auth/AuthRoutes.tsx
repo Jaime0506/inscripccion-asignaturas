@@ -1,9 +1,17 @@
 import { Navigate, RouteObject } from "react-router-dom";
-import AuthRedirect from "./AuthRedirect";
+import { ValidationRoutes } from "../components/ValidationRoutes";
 
-export const authRoutes: RouteObject = {
+const validation = (status: string):boolean => {
+    if (status === "not-authenticated") {
+        return true
+    }
+
+    return false
+}
+
+export const AuthRoutes: RouteObject = {
     path: 'auth',
-    element: <AuthRedirect />,
+    element: <ValidationRoutes redirectTo="/" validation={validation} />,
     children: [
         {
             path: '',
