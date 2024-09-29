@@ -4,17 +4,36 @@ import { Button } from "@nextui-org/button"
 import { Image } from "@nextui-org/image"
 import { Input } from "@nextui-org/input"
 
-import login_student from '../../assets/login_student.svg'
 import { Link } from "react-router-dom"
+
+import login_student from '../../assets/login_student.svg'
+import { useAuth } from "../../hooks/useAuth"
+import { userExample } from "../../data/dataExample"
+
+interface FormType {
+    email: string
+    password: string
+}
 
 export const LoginPage = () => {
 
+    const { onLogin } = useAuth()
     const [isVisible, setIsVisible] = useState(false);
+    const [formValues, setFormValues] = useState<FormType>({
+        email: "",
+        password: ""
+    });
 
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        onLogin(userExample)
+    }
 
-        console.log("Me llamaron")
+    const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormValues({
+            ...formValues,
+            [e.target.name]: e.target.value
+        })
     }
 
     const toogleVisible = () => setIsVisible(state => !state)
@@ -41,20 +60,24 @@ export const LoginPage = () => {
                                         <i className="fa-solid fa-envelope"></i>
                                     </div>
                                 }
+                                onChange={handleOnChangeInput}
+                                value={formValues.email}
                             />
                             <Input
-                                name="email"
+                                name="password"
                                 variant="bordered"
                                 radius="none"
                                 label="Contraseña"
                                 type={isVisible ? "text" : "password"}
                                 endContent={
-                                    <button className="h-full flex items-center" onClick={toogleVisible}>
+                                    <button className="h-full flex items-center" onClick={toogleVisible} type="button" >
                                         {
-                                            isVisible ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i> 
+                                            isVisible ? <i className="fa-solid fa-eye"></i> : <i className="fa-solid fa-eye-slash"></i>
                                         }
                                     </button>
                                 }
+                                onChange={handleOnChangeInput}
+                                value={formValues.password}
                             />
 
                             <div className="flex gap-5 py-8">
@@ -91,7 +114,7 @@ export const LoginPage = () => {
 
             <div className="flex-1 flex items-center justify-center bg-[#FF0004]">
                 <Image
-                    className=""
+                    alt="Logo teacher"
                     src={login_student}
                 />
             </div>

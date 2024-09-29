@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import type { AuthType } from '../../types/redux';
+import type { AuthType, UserType } from '../../types/redux';
 
 const initialState: AuthType = {
     status: "not-authenticated",
@@ -14,8 +14,22 @@ export const authSlice = createSlice({
     reducers: {
         checking: (state) => {
             state.status = "checking"
+            state.user = null
+            state.errorMessage = null
+        },
+
+        login: (state, action: PayloadAction<UserType>) => {
+            state.status = "authenticated"
+            state.user = {...action.payload}
+            state.errorMessage = null
+        },
+
+        logout: (state) => {
+            state.status = "not-authenticated"
+            state.user = null
+            state.errorMessage = null
         }
     },
 });
 
-export const { checking } = authSlice.actions;
+export const { checking, login, logout } = authSlice.actions;
