@@ -1,4 +1,4 @@
-import { checking, login, logout } from "../store/auth/authSlice"
+import { checking, login } from "../store/auth/authSlice"
 import { UserType } from "../types/redux"
 import { useAppDispatch } from "./useStore"
 
