@@ -84,8 +84,8 @@ export const LoginPage = () => {
                                 <Button
                                     type="submit"
                                     radius="none"
+                                    className="bg-primary" 
                                     style={{
-                                        backgroundColor: "#FF0004",
                                         color: "#FFFFFF"
                                     }}
                                 >
@@ -95,12 +95,7 @@ export const LoginPage = () => {
                                 <Button
                                     as={Link}
                                     radius="none"
-                                    style={{
-                                        backgroundColor: "#FFFFFF",
-                                        color: "black",
-                                        borderColor: "#FF0004",
-                                        borderWidth: 1.3,
-                                    }}
+                                    className="bg-white border-primary border-[1.3px] text-black"
                                     to={'/auth/register'}
                                 >
                                     Registrate
@@ -112,7 +107,7 @@ export const LoginPage = () => {
                 </section>
             </div>
 
-            <div className="flex-1 flex items-center justify-center bg-[#FF0004]">
+            <div className="flex-1 flex items-center justify-center bg-primary">
                 <Image
                     alt="Logo teacher"
                     src={login_student}

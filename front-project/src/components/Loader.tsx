@@ -5,7 +5,7 @@ export const Loader = () => {
         <div className="w-full h-screen flex flex-col items-center justify-center">
             <ClimbingBoxLoader 
                 size={30}
-                color="#c42e2e"
+                color="#FF0004"
                 loading={true}
                 speedMultiplier={1}
             />

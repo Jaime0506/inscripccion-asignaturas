@@ -6,6 +6,9 @@ import { Input } from "@nextui-org/input"
 
 import { Link } from "react-router-dom"
 
+import { useAuth } from "../../hooks/useAuth"
+import { userExample } from "../../data/dataExample"
+
 import register_student from '../../assets/register_teacher.svg'
 
 interface FormType {
@@ -16,6 +19,7 @@ interface FormType {
 
 export const RegisterPage = () => {
 
+    const { onLogin } = useAuth()
     const [isVisible, setIsVisible] = useState(false);
     const [formValues, setFormValues] = useState<FormType>({
         email: "",
@@ -26,7 +30,7 @@ export const RegisterPage = () => {
     const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        console.log(formValues)
+        onLogin(userExample)
     }
 
     const handleOnChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +44,7 @@ export const RegisterPage = () => {
 
     return (
         <section className="flex w-full h-screen grid-cols-2">
-            <div className="flex-1 flex items-center justify-center bg-[#FF0004]">
+            <div className="flex-1 flex items-center justify-center bg-primary">
                 <div className="flex flex-col items-center justify-center w-3/5">
                     <Image
                         // width={'50%'}
@@ -106,10 +110,7 @@ export const RegisterPage = () => {
                                 <Button
                                     type="submit"
                                     radius="none"
-                                    style={{
-                                        backgroundColor: "#FF0004",
-                                        color: "#FFFFFF"
-                                    }}
+                                    className="bg-primary text-white"
                                 >
                                     Registrate
                                 </Button>
