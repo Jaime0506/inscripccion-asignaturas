@@ -4,20 +4,37 @@ import { useEffect, useState } from "react"
 
 interface TableSubjectsProps {
     subjects: SubjectType[]
+    openModal: (subject: SubjectType) => void
 }
 
-export const TableSubjects = ({ subjects }: TableSubjectsProps) => {
+export const TableSubjects = ({ subjects, openModal }: TableSubjectsProps) => {
     const [data, setData] = useState<SubjectType[]>();
 
+    const handleOnOpenModal = (subject: SubjectType) => {
+        openModal(subject)
+    }
+
     const renderHeaders = () => {
+        const headers = ["ID", "NOMBRE", "CREDITOS", "CUPOS DISPONIBLES", "SELECCIONAR"]
 
-        if (!data) return <></>
-
-        const headers = Object.keys(data[0]).filter(key => key != "data_subject")
-
-        console.log(headers)
         return headers.map((header, index) => (
             <TableColumn key={index}>{header.toUpperCase()}</TableColumn>
+        ))
+    }
+
+    const renderRows = () => {
+        if (!data) return <></>
+
+        return data.map((subject, index) => (
+            <TableRow key={index}>
+                <TableCell>{subject.id}</TableCell>
+                <TableCell>{subject.name}</TableCell>
+                <TableCell>{subject.credits}</TableCell>
+                <TableCell>{subject.available > 0 ? "Disponible" : "No hay cupos disponibles"}</TableCell>
+                <TableCell>
+                    <i className="fa-solid fa-square-check text-2xl hover:cursor-pointer" onClick={() => handleOnOpenModal(subject)}></i>
+                </TableCell>
+            </TableRow>
         ))
     }
 
@@ -27,15 +44,6 @@ export const TableSubjects = ({ subjects }: TableSubjectsProps) => {
         setData(temp)
     }, [subjects])
 
-    useEffect(() => {
-        console.log(data)
-
-        if (data && data?.length > 0) {
-            renderHeaders()
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data])
-
     if (!data || data.length === 0 ) return <>Loading</>
 
     return (
@@ -44,12 +52,7 @@ export const TableSubjects = ({ subjects }: TableSubjectsProps) => {
                 {renderHeaders()}
             </TableHeader>
             <TableBody>
-                <TableRow key={1} >
-                    <TableCell>Ejemplo para entender1</TableCell>
-                    <TableCell>Ejemplo para entender2</TableCell>
-                    <TableCell>Ejemplo para entender3</TableCell>
-                    <TableCell>Ejemplo para entender4</TableCell>
-                </TableRow>
+                {renderRows()}
             </TableBody>
         </Table>
     )
